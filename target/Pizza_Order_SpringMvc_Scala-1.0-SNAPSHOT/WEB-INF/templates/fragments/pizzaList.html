@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<th:block th:fragment="ajaxLoadedContent">
+
+<div class="container mt-5" th:style="${'font-family: Oswald, sans-serif; color: #12044F;margin-bottom: 100px;'}">
+
+	<th:block th:if="${allPizzas.size() == 0}">
+		<div th:align="${'center'}">
+			<h2 th:text="${'No pizzas currently available!'}"></h2>
+			<button class="btn btn-success mt-5"
+				th:onclick="redirectAddPizza()" 
+				th:text="${'Add Pizza'}">
+			</button>
+		</div>
+	</th:block>
+	
+	<th:block th:if="${allPizzas.size() > 0}">
+    <div class="row">
+        <h1 th:text="${'All Pizzas'}"></h1>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3">
+            <button  class="btn btn-success btn-sm mb-3" 
+            	th:onclick="redirectAddPizza()" 
+            	th:text="${'Create New Pizza'}">
+            </button>
+        </div>
+    </div>
+    
+    <input type="hidden" id="recordsPerPage" th:value="${recordsPerPage}">
+    <table class="table table-striped table-bordered" id="listingTable">
+        <thead class="table-danger">
+        <tr>
+            <th class="text-center" style="text-align: center; vertical-align: middle"> Image </th>
+            <th class="text-center" style="text-align: center; vertical-align: middle"> Name </th>
+            <th class="text-center" style="text-align: center; vertical-align: middle"> Description </th>
+            <th class="text-center" style="text-align: center; vertical-align: middle"  > Actions </th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="pizza: ${allPizzas}">
+            <td><img th:src="@{${pizza.getMainImagePath()}}" height="100" width="133"></td>
+            <td th:text = "${pizza.name}" style="text-align: center; vertical-align: middle"></td>
+            <td th:text = "${pizza.description}" style="text-align: center; vertical-align: middle"></td>
+            <td style="text-align: center; vertical-align: middle">
+                <div class="dropdown">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                        Actions
+                    </button>
+                    <div class="dropdown-menu" style="background-color: #82FF76">
+                        <a class="dropdown-item" 
+                        	style="color: green; background-color: #82FF76" 
+                        	th:onclick="redirectUpdatePizza([[${pizza.pizzaId}]])"
+                        	th:onmouseover="this.style='cursor: pointer;background-color:#C4C4CF;'" 
+                        	th:onmouseout="this.style='color: green; background-color: #82FF76;'"
+                        	th:text="${'Update'}">
+                        </a>
+                        <a class="dropdown-item" 
+                        	style="color: green; background-color: #82FF76" 
+                        	th:onclick="redirectPizzaDetails([[${pizza.pizzaId}]])"
+                        	th:onmouseover="this.style='cursor: pointer;background-color:#C4C4CF;'" 
+                        	th:onmouseout="this.style='color: green; background-color: #82FF76;'"
+                        	th:text="${'Details'}">
+                        </a>
+                        <a class="dropdown-item" 
+                        	style="color: green; background-color: #82FF76" 
+                        	th:onclick="redirectAllSizesByPizza([[${pizza.pizzaId}]])"
+                        	th:onmouseover="this.style='cursor: pointer;background-color:#C4C4CF;'"
+                        	th:onmouseout="this.style='color: green; background-color: #82FF76;'" 
+                        	th:text="${'View Sizes & Prices'}">
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" 
+                        	style="color: red; background-color: #EBC8C8" 
+                        	th:onclick="deletePizza([[${pizza.pizzaId}]])"
+                        	th:onmouseover="this.style='cursor: pointer;background-color:#C4C4CF;'"
+                        	th:onmouseout="this.style='color: red; background-color: #EBC8C8;'" 
+                        	th:text="${'Delete'}">
+                        </a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div style="float: right">
+    	<button th:onclick="prevPage()" id="btn_prev">Prev</button>
+			page: <span id="page"></span>
+		<button th:onclick="nextPage()" id="btn_next">Next</button>
+	</div>
+			
+	<script th:src="@{/js/pagination.js}"></script>
+	<script>
+		$(document).ready(function() {
+	 		changePage(1);
+		});
+	</script>
+	</th:block>
+</div>
+
+</th:block>
+
+

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<th:block th:fragment="ajaxLoadedContent">
+
+
+	<div class="container mb-5 mt-5"
+		style="font-family: Oswald, sans-serif; color: #12044F; margin-bottom: 100px;">
+		<div th:align="${'center'}">
+			<h1 th:text="${'Registration Failed'}"></h1>
+			<h3 th:text="${'Email already exists'}"></h3>
+		</div>
+
+		<div th:align="${'center'}">
+			<button class="btn btn-secondary mr-3" th:onclick="redirectHome()"
+				th:text="${'Home'}"></button>
+			<button class="btn btn-success" th:onclick="redirectRegister()"
+				th:text="${'Retry'}"></button>
+		</div>
+
+
+	</div>
+
+
+</th:block>

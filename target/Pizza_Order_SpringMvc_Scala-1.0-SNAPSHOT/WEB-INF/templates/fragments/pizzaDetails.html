@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<th:block th:fragment="ajaxLoadedContent">
+
+<div class="container mt-5" th:style="${'font-family: Oswald, sans-serif; color: #12044F;margin-bottom: 100px;'}">
+    <div class="row">
+        <h3> View Pizza Details <button style="margin-left: 390px" th:onclick="redirectAllPizzasAdmin()"
+                                                                                 class="btn btn-success"><- Back</button> </h3>
+    </div>
+<br>
+<table class="table">
+    <tbody>
+    <tr>
+        <th> Name: </th>
+        <td th:text = "${pizza.name}"></td>
+    </tr>
+    <tr>
+        <th class="list-group-item-secondary" style="background-color: #82FF76"> Description: </th>
+        <td class="list-group-item-secondary" style="background-color: #82FF76" th:text="${pizza.description}" ></td>
+    </tr>
+    <tr>
+        <th></th>
+        <td><img th:src="@{${pizza.getMainImagePath}}" height="250" width="332.5"></td>
+    </tr>
+    <tr>
+        <th class="list-group-item-primary" style="vertical-align: middle; background-color: #82FF76"> Actions: </th>
+        <td class="list-group-item-primary" style="background-color: #82FF76">
+            <button th:onclick="redirectAllSizesByPizza([[${pizza.pizzaId}]])"
+               class="btn btn-success" th:text="${'View Sizes & Prices'}"></button>
+            <button th:onclick="redirectUpdatePizza([[${pizza.pizzaId}]])" 
+               class="btn btn-success" th:text="${'Update'}">
+            </button>
+            <button th:onclick="deletePizza([[${pizza.pizzaId}]])"
+               class="btn btn-danger" th:text="${'Delete'}"></button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</div>
+
+</th:block>

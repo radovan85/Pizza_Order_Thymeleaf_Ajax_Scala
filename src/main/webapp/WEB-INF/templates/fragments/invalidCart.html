@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<th:block th:fragment="ajaxLoadedContent">
+
+	<div class="container mt-5"
+		th:style="${'font-family: Oswald, sans-serif; color: #12044F;margin-bottom: 100px;'}">
+
+		<div class="jumbotron" th:style="${'background-color: #c20e14; color: #d9d9d9;'}">
+			<h1 th:text="${'Invalid Cart'}"></h1>
+			<h5 th:text="${'Please add products in your cart'}"></h5>
+		</div>
+
+		<div class="mt-5" th:align="${'center'}">
+			<button class="btn btn-success"
+				th:onclick="redirectAllPizzasUser()"
+				th:text="${'All Pizzas'}">
+			</button>
+		</div>
+	</div>
+</th:block>

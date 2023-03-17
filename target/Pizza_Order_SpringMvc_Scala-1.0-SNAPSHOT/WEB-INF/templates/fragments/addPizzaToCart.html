@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<th:block th:fragment="ajaxLoadedContent">
+
+	<div class="container mt-5"
+		th:style="${'font-family: Oswald, sans-serif; color: #12044F;margin-bottom: 100px;'}">
+		<div class="row">
+			<div
+				class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+				<h1 class="text-center" th:text="${'Add To Cart'}"></h1>
+				<div class="card-body">
+					<form th:object="${cartItem}" method="POST" id="cartItemForm">
+
+
+						<div class="form-group">
+							<label> Pizza: </label> <input type="hidden"
+								th:value="${pizza.pizzaId}" th:text="${pizza.name}">
+						</div>
+
+						<div class="form-group">
+							<label> Pizza Size </label> <select name="pizzaSizeId"
+								id="pizzaSizeId" class="form-control">
+								<option th:value="''" th:text="${'Please Select'}"></option>
+								<th:block th:each="pizzaSize : ${allPizzaSizes}">
+									<option th:value="${pizzaSize.pizzaSizeId}">
+										<th:block>
+											<span th:text="${pizzaSize.name}"></span>
+											<span>&euro;</span>
+											<span
+												th:text="${pizzaSize.price} % 1 == 0 ? ${pizzaSize.price} :${#numbers.formatDecimal(pizzaSize.price, 0, 2)}"></span>
+										</th:block>
+
+									</option>
+								</th:block>
+							</select> <span class="text-danger" id="pizzaSizeIdError"
+								th:style="${'visibility: hidden;'}"
+								th:text="${'Please select 1 of the options!'}"> </span>
+						</div>
+
+						<div class="form-group">
+							<label th:text="${'Quantity'}"></label> <input type="text"
+								id="quantity" name="quantity" class="form-control"
+								th:placeholder="${'Enter quantity'}"
+								th:onkeypress="return validateNumber(event)" />
+							<span class="text-danger" id="quantityError"
+								th:style="${'visibility: hidden;'}"
+								th:text="${'Please provide quantity min 1 max 20!'}"> </span>
+						</div>
+
+
+
+						<div class="box-footer">
+							<button type="submit" class="btn btn-success">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		cartItemInterceptor("cartItemForm");
+	</script>
+</th:block>

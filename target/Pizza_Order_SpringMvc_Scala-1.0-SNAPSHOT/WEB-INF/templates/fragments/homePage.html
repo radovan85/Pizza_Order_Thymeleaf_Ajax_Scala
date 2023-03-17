@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<th:block th:fragment="ajaxLoadedContent">
+
+	<div class="container" th:style="${'font-family: Oswald, sans-serif; color: #12044F;'}">
+    	<div class="row">
+    		<th:block sec:authorize="hasAuthority('ADMIN')">
+        		<h1 th:text="${'Admin Dashboard'}"></h1>
+        	</th:block>
+        	
+        	<th:block sec:authorize="hasAuthority('ROLE_USER')">
+        		<h1 th:text="${'Customer Dashboard'}"></h1>
+        	</th:block>
+    	</div>
+	</div>
+</th:block>

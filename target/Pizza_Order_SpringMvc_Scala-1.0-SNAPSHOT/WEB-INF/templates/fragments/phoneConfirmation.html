@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<th:block th:fragment="ajaxLoadedContent">
+
+	<div class="container mt-5"
+		th:style="${'font-family: Oswald, sans-serif; color: #12044F;margin-bottom: 100px;'}">
+		<div class="row">
+			<div
+				class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+				<h1 class="text-center" th:text="${'Confirm Phone'}"></h1>
+				<div class="card-body">
+					<form th:object="${customer}" method="POST" id="customerForm">
+
+						<input 
+							type="hidden" 
+							name="customerId"
+							th:value="${currentCustomer.customerId}"	
+						/>
+						
+						<input 
+							type="hidden" 
+							name="shippingAddressId"
+							th:value="${currentCustomer.shippingAddressId}"	
+						/>
+						
+						<input 
+							type="hidden" 
+							name="userId"
+							th:value="${currentCustomer.userId}"	
+						/>
+						
+						<input 
+							type="hidden" 
+							name="cartId"
+							th:value="${currentCustomer.cartId}"	
+						/>
+
+						<div class="form-group">
+							<label> Phone </label> 
+							<input 
+								type="text" 
+								id="customerPhone" 
+								name="customerPhone"
+								class="form-control" 
+								th:placeholder="${'Enter Phone Number'}" 
+								th:value="${currentCustomer.customerPhone}" 
+								th:onkeypress="return validateNumber(event)"
+							/>
+							<span
+								class="text-danger" id="customerPhoneError"
+								th:style="${'visibility: hidden;'}"
+								th:text="${'Please provide valid phone number!'}"> 
+							</span>
+						</div>
+
+						
+						<div class="box-footer">
+							<button type="button" class="btn btn-success mr-3" 
+								th:onclick="redirectAddressConfirm()"
+								th:text="${'Back'}">
+							</button>
+							<button type="button" class="btn btn-danger mr-3"  
+           						th:onclick="redirectCancelOrder()" 
+           						th:text="${'Cancel'}">
+           					</button>
+							<button type="submit" class="btn btn-success">Continue</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script>customerInterceptor("customerForm")</script>
+</th:block>

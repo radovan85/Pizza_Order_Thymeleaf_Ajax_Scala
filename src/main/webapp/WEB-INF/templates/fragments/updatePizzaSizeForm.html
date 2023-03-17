@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<th:block th:fragment="ajaxLoadedContent">
+
+<div class="container mb-5 mt-5" th:style="${'font-family: Oswald, sans-serif; color: #12044F;margin-bottom: 100px;'}">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+            <h1 class="text-center"  th:text="${'Add Size & Price To Pizza'}"></h1>
+            <div class="card-body">
+                <form  th:object="${pizzaSize}" method="POST" id="pizzaSizeForm">
+                	<input type="hidden" name="pizzaSizeId" th:value="${currentPizzaSize.pizzaSizeId}">
+                    <div class="form-group">
+                        <label> Pizza </label>
+                        <select name="pizzaId" id="pizzaId" class="form-control">
+                        	<option th:value="''" th:text="${'Please Select'}"></option>
+                            <th:block th:each="pizza : ${allPizzas}">
+                                <option th:text="${pizza.name}" th:value="${pizza.pizzaId}"/>
+                            </th:block>
+                        </select>
+                        <span class="text-danger" id="pizzaIdError" 
+                        	th:style="${'visibility: hidden;'}" 
+                        	th:text="${'Please select 1 of the options!'}">
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        <label> Size </label>
+                        <input
+                                type = "text"
+                                id="name"
+                                name= "name"
+                                class = "form-control"
+                                th:placeholder = "${'Enter Pizza Size'}"
+                                th:value="${currentPizzaSize.name}"
+                                
+                        />
+                        <span class="text-danger" id="nameError" 
+                        	th:style="${'visibility: hidden;'}" 
+                        	th:text="${'Please provide size name!'}">
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        <label> Price </label>
+                        <input
+                                type = "text"
+                                id="price"
+                                name= "price"
+                                class = "form-control"
+                                th:placeholder = "${'Enter Pizza Price'}"
+                                th:value="${currentPizzaSize.price}"
+                                th:onkeypress="return validateNumber(event)"
+                        />
+                        <span class="text-danger" id="priceError" 
+                        	th:style="${'visibility: hidden;'}" 
+                        	th:text="${'Please provide valid price!'}">
+                        </span>
+                    </div>
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-success" 
+                        	th:text="${'Update'}"> 
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>pizzaSizeInterceptor("pizzaSizeForm");</script>
+</th:block>

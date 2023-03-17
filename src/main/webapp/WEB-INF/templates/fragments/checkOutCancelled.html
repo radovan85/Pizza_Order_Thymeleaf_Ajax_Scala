@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<th:block th:fragment="ajaxLoadedContent">
+
+<div class="container-wrapper">
+	<div class="container mt-5"
+		th:style="${'font-family: Oswald, sans-serif; color: #12044F;margin-bottom: 100px;'}">
+		<section>
+			<div class="jumbotron">
+				<div class="container" >
+					<h1 class="alert alert-danger">Checkout cancelled!</h1>
+					<p>Your checkout process is cancelled! You may continue shopping.</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="container">
+			<div align="center">
+				<button th:onclick="redirectAllPizzasUser()"  class="btn btn-success">Go to All Pizzas</button>
+			</div>
+		</section>
+	</div>
+	
+</div>
+</th:block>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<th:block th:fragment="ajaxLoadedContent">
+
+	<div class="container mt-5"
+		style="font-family: Oswald, sans-serif; color: #12044F; margin-bottom: 100px;">
+
+		<div class="mb-5" align="center">
+			<h1 th:text="${'Registration Completed'}"></h1>
+		</div>
+
+		<div th:align="${'center'}">
+			<button class="btn btn-success" th:onclick="redirectLogin()"
+				th:text="${'Login Page'}"></button>
+		</div>
+
+	</div>
+
+
+
+</th:block>

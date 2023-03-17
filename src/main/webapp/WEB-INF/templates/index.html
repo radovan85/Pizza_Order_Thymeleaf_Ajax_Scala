@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<head th:replace="fragments/layout :: head"></head>
+
+<body style="background-color: #f7fbfb;">
+
+	<div th:replace="fragments/layout :: header"></div>
+
+	<div id="ajaxLoadedContent"></div>
+	
+	<div th:replace="fragments/layout :: footer"></div>
+
+	<script th:src="@{/js/script.js}"></script>
+	<script th:src="@{/js/validation.js}"></script>
+
+</body>
+</html>

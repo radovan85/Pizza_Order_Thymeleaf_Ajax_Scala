@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<th:block th:fragment="ajaxLoadedContent">
+
+<div class="container" th:style="${'font-family: Oswald, sans-serif; color: #12044F;margin-bottom: 100px;'}">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+            <h1 class="text-center" th:text="${'Update Pizza'}"> </h1>
+            <div class="card-body">
+                <form  th:object="${pizza}" id="pizzaForm" method="POST" enctype="multipart/form-data" style="max-width: 400px; margin: 0 auto;">
+                	<input type="hidden" name="pizzaId" th:value="${currentPizza.pizzaId}">
+                    <div class="form-group">
+                        <label th:text="${'Image'}"></label>
+                        <input
+                                type = "file"
+                                name= "pizzaImage"
+                                accept="image/png, image/jpeg, image/jpg"
+                        />
+                    </div>
+                    
+                    <input type="hidden" name="imgName"  th:value="${pizza.imageName}">
+
+                    <div class="form-group">
+                        <label th:text="${'Name'}"> </label>
+                        <input
+                                type = "text"
+                                id="name"
+                                name= "name"
+                                class = "form-control"
+                                th:placeholder = "${'Enter Pizza Name'}"
+                                th:value="${currentPizza.name}"
+                        />
+                        <span class="text-danger" id="nameError" 
+                        	th:style="${'visibility: hidden;'}" 
+                        	th:text="${'Please provide name!'}">
+                        </span>
+                        
+                    </div>
+
+                    <div class="form-group">
+                        <label  th:text="${'Description'}"> </label>
+                        <input
+                                type = "text"
+                                id="description"
+                                name="description"
+                                class = "form-control"
+                                th:placeholder = "${'Enter Pizza Description'}"
+                                th:value="${currentPizza.description}"
+                        />
+                        <span class="text-danger" id="descriptionError" 
+                        	th:style="${'visibility: hidden;'}" 
+                        	th:text="${'Please provide description!'}">
+                        </span>
+                    </div>
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-success" 
+                            th:text="${'Update'}">
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+var element = document.getElementById("pizzaForm");
+element.addEventListener("submit", event => {
+  event.preventDefault();
+  executePizzaForm();
+});
+</script>
+
+</th:block>

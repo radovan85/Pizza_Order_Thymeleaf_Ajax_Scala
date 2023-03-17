@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<th:block th:fragment="ajaxLoadedContent">
+
+	<div class="container mt-5"
+		th:style="${'font-family: Oswald, sans-serif; color: #12044F;margin-bottom: 100px;'}">
+		<div class="row">
+			<div
+				class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+				<h1 class="text-center">Registration</h1>
+				<div class="card-body">
+					<form method="post" th:object="${registerForm}"
+						id="registrationForm">
+						<div class="form-group">
+							<label> First Name </label> <input id="firstName" type="text"
+								th:field="*{user.firstName}" class="form-control"
+								th:placeholder="${'Enter First Name'}" />
+							<span class="text-danger" id="firstNameError"
+								th:style="${'visibility: hidden;'}"
+								th:text="${'Please provide first name!'}"> </span>
+						</div>
+						<div class="form-group">
+							<label> Last Name </label> <input id="lastName" type="text"
+								th:field="*{user.lastName}" class="form-control"
+								th:placeholder="${'Enter Last Name'}" />
+							<span class="text-danger" id="lastNameError"
+								th:style="${'visibility: hidden;'}"
+								th:text="${'Please provide last name!'}"> </span>
+						</div>
+						<div class="form-group">
+							<label> Email Address </label> <input id="email" type="text"
+								th:field="*{user.email}" class="form-control"
+								th:placeholder="${'Enter Email Address'}" />
+							<span class="text-danger" id="emailError"
+								th:style="${'visibility: hidden;'}"
+								th:text="${'Please provide valid email!'}"> </span>
+						</div>
+						<div class="form-group">
+							<label> Password </label> <input id="password" type="password"
+								th:field="*{user.password}" class="form-control"
+								th:placeholder="${'Enter Password'}" />
+							<span class="text-danger" id="passwordError"
+								th:style="${'visibility: hidden;'}"
+								th:text="${'Minimum 6 letters!'}"> </span>
+						</div>
+						<div class="form-group">
+							<label> Confirm Password </label> <input id="confirmpass"
+								type="password" class="form-control"
+								th:placeholder="${'Confirm Password'}" />
+						</div>
+						<div class="form-group">
+							<label> Address </label> <input id="address" type="text"
+								th:field="*{shippingAddress.address}" class="form-control"
+								th:placeholder="${'Enter Address'}" />
+							<span class="text-danger" id="addressError"
+								th:style="${'visibility: hidden;'}"
+								th:text="${'Please provide address!'}"> </span>
+						</div>
+						<div class="form-group">
+							<label> City </label> <input id="city" type="text"
+								th:field="*{shippingAddress.city}" class="form-control"
+								th:placeholder="${'Enter city'}" /> <span
+								class="text-danger" id="cityError"
+								th:style="${'visibility: hidden;'}"
+								th:text="${'Please provide city!'}"> </span>
+						</div>
+						<div class="form-group">
+							<label> Zip Code </label> <input id="zipcode" type="text"
+								th:field="*{shippingAddress.zipcode}" class="form-control"
+								th:placeholder="${'Enter Zip Code'}" />
+							<span class="text-danger" id="zipcodeError"
+								th:style="${'visibility: hidden;'}"
+								th:text="${'Please provide zip code!'}"> </span>
+						</div>
+						<div class="form-group">
+							<label> Phone </label> <input id="phone" type="text"
+								th:field="*{customer.customerPhone}" class="form-control"
+								th:placeholder="${'Enter Phone Number'}"
+								th:onkeypress="return validateNumber(event)" />
+							<span class="text-danger" id="phoneError"
+								th:style="${'visibility: hidden;'}"
+								th:text="${'Minimum 9 max 15 nums!'}"> </span>
+						</div>
+						<div class="box-footer">
+							<button type="submit" class="form-control btn btn-success"
+								th:onclick="return validatePassword()">
+								Register</button>
+							<span style="color: green"> Already have an account? <a
+								style="color: red" th:onmouseover="this.style='cursor: pointer;color: #09274F;'"
+								th:onmouseout="this.style='color: red'"
+								th:onclick="redirectLogin()"> Login here </a></span>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		formInterceptor("registrationForm");
+	</script>
+</th:block>

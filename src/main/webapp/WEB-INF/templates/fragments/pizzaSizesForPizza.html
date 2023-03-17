@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<th:block th:fragment="ajaxLoadedContent">
+
+<div class="container mt-5" th:style="${'font-family: Oswald, sans-serif; color: #12044F;margin-bottom: 100px;'}">
+    <div class="row">
+        <h1> Pizza Sizes By Pizza <a style="margin-left: 390px" th:href="@{/pos/pizzas}"
+                               class="btn btn-success"><- Back to Pizzas</a> </h3></h1>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3">
+            <a th:onclick="redirectAddPizzaSize()" class="btn btn-success btn-sm mb-3"> Add Pizza Size </a>
+        </div>
+    </div>
+    <table class="table table-striped table-bordered" >
+        <thead class="table-dark">
+        <tr>
+            <th class="text-center" style="text-align: center; vertical-align: middle"> Image </th>
+            <th class="text-center" style="text-align: center; vertical-align: middle"> Pizza </th>
+            <th class="text-center" style="text-align: center; vertical-align: middle"> Size </th>
+            <th class="text-center" style="text-align: center; vertical-align: middle"> Price (in USD)</th>
+            <th class="text-center" style="text-align: center; vertical-align: middle"  > Actions </th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="pizzaSize: ${pizzaSizes}">
+            <td><img th:src="@{${pizzaSize.pizza.imagePath}}" height="100" width="133"></td>
+            <td th:text = "${pizzaSize.pizza.name}" style="text-align: center; vertical-align: middle"></td>
+            <td th:text = "${pizzaSize.name}" style="text-align: center; vertical-align: middle"></td>
+            <td th:text = "${pizzaSize.price}" style="text-align: center; vertical-align: middle" ></td>
+            <td style="text-align: center; vertical-align: middle">
+                <div class="dropdown">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                        Actions
+                    </button>
+                    <div class="dropdown-menu" style="background-color: #82FF76">
+                        <a class="dropdown-item" th:href = "@{/pos/pizzas/sizes/edit/{pizzaSizeId}(pizzaSizeId = ${pizzaSize.pizzaSizeId})}" style="color: green; background-color: #82FF76" >Update</a>
+                        <a class="dropdown-item" th:href = "@{/pos/pizzas/sizes/details/{pizzaSizeId}(pizzaSizeId = ${pizzaSize.pizzaSizeId})}" style="color: green; background-color: #82FF76">Details</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" th:href = "@{/pos/pizzas/sizes/{pizzaSizeId}(pizzaSizeId = ${pizzaSize.pizzaSizeId})}" style="color: red; background-color: #EBC8C8">Delete</a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+
+</div>
+
+</th:block>

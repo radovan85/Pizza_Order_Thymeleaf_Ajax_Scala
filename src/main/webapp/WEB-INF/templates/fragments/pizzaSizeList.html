@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<th:block th:fragment="ajaxLoadedContent">
+
+	<div class="container mt-5"
+		th:style="${'font-family: Oswald, sans-serif; color: #12044F;margin-bottom: 100px;'}">
+
+		<th:block th:if="${allPizzaSizes.size() == 0}">
+			<div th:align="${'center'}">
+				<h2 th:text="${'No pizza sizes currently available!'}"></h2>
+				<button class="btn btn-success mt-5"
+					th:onclick="redirectAddPizzaSize()" th:text="${'Add Pizza Size'}">
+				</button>
+			</div>
+		</th:block>
+
+		<th:block th:if="${allPizzaSizes.size() > 0}">
+			<div class="row">
+				<h1>
+					All Pizza Sizes <a style="margin-left: 390px"
+						th:onclick="redirectAllPizzasAdmin()" class="btn btn-success"><-
+						Back to Pizzas</a>
+				</h1>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-3">
+					<a th:onclick="redirectAddPizzaSize()"
+						class="btn btn-success btn-sm mb-3"> Add Pizza Size </a>
+				</div>
+			</div>
+
+			<input type="hidden" id="recordsPerPage" th:value="${recordsPerPage}">
+			<table class="table table-striped table-bordered" id="listingTable">
+				<thead class="table-dark">
+					<tr>
+						<th class="text-center"
+							style="text-align: center; vertical-align: middle">Image</th>
+						<th class="text-center"
+							style="text-align: center; vertical-align: middle">Pizza</th>
+						<th class="text-center"
+							style="text-align: center; vertical-align: middle">Size</th>
+						<th class="text-center"
+							style="text-align: center; vertical-align: middle">Price</th>
+						<th class="text-center"
+							style="text-align: center; vertical-align: middle">Actions</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr th:each="pizzaSize: ${allPizzaSizes}">
+						<th:block th:each="pizza : ${allPizzas}">
+							<th:block th:if="${pizzaSize.pizzaId == pizza.pizzaId}">
+								<td><img th:src="@{${pizza.getMainImagePath}}" height="100"
+									width="133"></td>
+								<td th:text="${pizza.name}"
+									style="text-align: center; vertical-align: middle"></td>
+								<td th:text="${pizzaSize.name}"
+									style="text-align: center; vertical-align: middle"></td>
+								<td style="text-align: center; vertical-align: middle"><span>&euro;</span>
+									<span
+									th:text="${pizzaSize.price} % 1 == 0 ? ${pizzaSize.price} :${#numbers.formatDecimal(pizzaSize.price, 0, 2)}">
+								</span></td>
+								<td style="text-align: center; vertical-align: middle">
+									<div class="dropdown">
+										<button type="button" class="btn btn-success dropdown-toggle"
+											data-toggle="dropdown">Actions</button>
+										<div class="dropdown-menu"
+											style="background-color: #82FF76; color: #074912;">
+											<a class="dropdown-item"
+												th:onclick="redirectUpdatePizzaSize([[${pizzaSize.pizzaSizeId}]])"
+												th:onmouseover="this.style='cursor: pointer;background-color:#C4C4CF;'"
+												th:onmouseout="this.style='background-color:#82FF76;color: #074912;'">Update
+											</a> <a class="dropdown-item"
+												th:onclick="redirectPizzaSizeDetails([[${pizzaSize.pizzaSizeId}]])"
+												th:onmouseover="this.style='cursor: pointer;background-color:#C4C4CF;'"
+												th:onmouseout="this.style='background-color:#82FF76;color: #074912;'">Details
+											</a>
+											<div class="dropdown-divider"></div>
+											<a class="dropdown-item"
+												th:onclick="deletePizzaSize([[${pizzaSize.pizzaSizeId}]])"
+												th:onmouseover="this.style='cursor: pointer;background-color:#C4C4CF;'"
+												th:onmouseout="this.style='background-color:#EBC8C8;color: red;'"
+												style="color: red; background-color: #EBC8C8">Delete </a>
+										</div>
+									</div>
+								</td>
+							</th:block>
+						</th:block>
+					</tr>
+				</tbody>
+
+			</table>
+
+			<div style="float: right">
+				<button th:onclick="prevPage()" id="btn_prev">Prev</button>
+				page: <span id="page"></span>
+				<button th:onclick="nextPage()" id="btn_next">Next</button>
+			</div>
+
+			<script th:src="@{/js/pagination.js}"></script>
+			<script>
+				$(document).ready(function() {
+					changePage(1);
+				});
+			</script>
+		</th:block>
+	</div>
+
+</th:block>

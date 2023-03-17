@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<th:block th:fragment="ajaxLoadedContent">
+
+<div class="container" th:style="${'font-family: Oswald, sans-serif; color: #12044F;margin-bottom: 100px;'}">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+            
+            <div class="text-danger">
+            	<span th:text="${alert}"></span>    
+            </div>
+            <h1 class="text-center"> Login Page </h1>
+            <div class="card-body">
+                <form method="POST" id="loginForm">
+                    <div class="form-group">
+                        <label for="username" th:text="${'Email Address'}"> </label>
+                        <input
+                                type = "text"
+                                name= "email"
+                                class = "form-control"
+                                th:placeholder = "${'Enter Email Address'}"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="password" th:text="${'Password'}"> </label>
+                        <input
+                                type = "password"
+                                name= "password"
+                                class = "form-control"
+                                th:placeholder = "${'Enter Password'}"
+                        />
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="form-control btn btn-success"
+                            th:text="${'Login'}">
+                        </button>
+                        <span th:style="${'color: green'}" th:text="${'New User?'}"></span> 
+                        <a th:style="${'color: #4475B5;'}" 
+                        	th:onmouseover="this.style='cursor: pointer;color: red;'" 
+                        	th:onmouseout="this.style='cursor: pointer;color: #4475B5;'" 
+                        	th:onclick="redirectRegister()"
+                        	th:text="${'Register here'}"> 
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+	loginInterceptor("loginForm");
+</script> 
+</th:block>

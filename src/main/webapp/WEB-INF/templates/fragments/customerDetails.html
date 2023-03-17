@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<th:block th:fragment="ajaxLoadedContent">
+
+	<div class="container mt-5"
+		th:style="${'font-family: Oswald, sans-serif; color: #12044F;margin-bottom: 100px;'}">
+
+		<h3>
+			View User Details <a style="margin-left: 390px"
+				th:onclick="redirectAllCustomers()" class="btn btn-success"><- Back</a>
+		</h3>
+		<br>
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>First Name:</th>
+					<td th:text="${user.firstName}"></td>
+				</tr>
+				<tr>
+					<th class="list-group-item-secondary"
+						style="background-color: #82FF76">Last Name:</th>
+					<td class="list-group-item-secondary"
+						style="background-color: #82FF76" th:text="${user.lastName}"></td>
+				</tr>
+				<tr>
+					<th>Email Address:</th>
+					<td th:text="${user.email}"></td>
+				</tr>
+				<tr>
+					<th class="list-group-item-secondary"
+						style="background-color: #82FF76">Phone:</th>
+					<td class="list-group-item-secondary"
+						style="background-color: #82FF76" th:text="${customer.customerPhone}"></td>
+				</tr>
+				<tr>
+					<th th:text="${'Enabled:'}"></th>
+					<th:block th:if="${user.enabled == 0}">
+						<td>
+							<span class="text-danger" th:text="${'Suspended'}"></span>
+						</td>
+					</th:block>
+					
+					<th:block th:if="${user.enabled == 1}">
+						<td th:text="${'Active'}"></td>
+					</th:block>
+				</tr>
+				<tr>
+					<th class="list-group-item-primary"
+						style="background-color: #82FF76">Actions:</th>
+					<th:block th:if="${user.enabled == 1}">
+					<td class="list-group-item-primary"
+						style="background-color: #82FF76"><a
+						th:onclick="suspendUser([[${user.id}]])"
+						class="btn btn-danger">Suspend</a></td>
+					</th:block>
+					
+					<th:block th:if="${user.enabled == 0}">
+					<td class="list-group-item-primary"
+						style="background-color: #82FF76"><a
+						th:onclick="reactivateUser([[${user.id}]])"
+						class="btn btn-secondary">Reactivate</a></td>
+					</th:block>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</th:block>

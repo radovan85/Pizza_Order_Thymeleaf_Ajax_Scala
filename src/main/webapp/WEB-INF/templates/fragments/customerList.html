@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<th:block th:fragment="ajaxLoadedContent">
+
+	<div class="container mt-5"
+		th:style="${'font-family: Oswald, sans-serif; color: #12044F;margin-bottom: 100px;'}">
+
+		<th:block th:if="${allCustomers.size() == 0}">
+			<div th:align="${'center'}">
+				<h2 th:text="${'No customers currently available!'}"></h2>
+				<button class="btn btn-success mt-5" th:onclick="redirectHome()"
+					th:text="${'Home'}"></button>
+			</div>
+		</th:block>
+
+		<th:block th:if="${allCustomers.size() > 0}">
+			<div class="row mb-5">
+				<h1 th:text="${'All Registered Users'}"></h1>
+			</div>
+
+			<input type="hidden" id="recordsPerPage" th:value="${recordsPerPage}">
+			<table class="table table-striped table-bordered" id="listingTable">
+				<thead class="table-dark">
+					<tr>
+						<th class="text-center">First Name</th>
+						<th class="text-center">Last Name</th>
+						<th class="text-center">Email Address</th>
+						<th class="text-center">Enabled</th>
+						<th class="text-center">Actions</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr th:each="tempUser: ${allUsers}">
+						<th:block th:each="tempCustomer : ${allCustomers}">
+							<th:block th:if="${tempCustomer.userId == tempUser.id}">
+								<td th:text="${tempUser.firstName}"></td>
+								<td th:text="${tempUser.lastName}"></td>
+								<td th:text="${tempUser.email}"></td>
+								<th:block th:if="${tempUser.enabled == 0}">
+									<td><span class="text-danger" th:text="${'Suspended'}"></span>
+									</td>
+								</th:block>
+
+								<th:block th:if="${tempUser.enabled == 1}">
+									<td th:text="${'Active'}"></td>
+								</th:block>
+
+
+								<td style="text-align: center; vertical-align: middle">
+									<div class="dropdown">
+										<button type="button" class="btn btn-success dropdown-toggle"
+											data-toggle="dropdown">Actions</button>
+										<div class="dropdown-menu" style="background-color: #82FF76">
+
+											<a class="dropdown-item"
+												style="color: green; background-color: #82FF76"
+												th:onclick="redirectCustomerDetails([[${tempCustomer.customerId}]])"
+												th:onmouseover="this.style='cursor: pointer;background-color: #d9d9d9;'"
+												th:onmouseout="this.style='color: green; background-color: #82FF76;'">Details
+											</a>
+											<div class="dropdown-divider"></div>
+											<th:block th:if="${tempUser.enabled == 1}">
+												<a class="dropdown-item"
+													style="color: red; background-color: #EBC8C8"
+													th:onmouseover="this.style='cursor: pointer;background-color: #d9d9d9;'"
+													th:onmouseout="this.style='color: red; background-color: #EBC8C8;'"
+													th:onclick="suspendUser([[${tempUser.id}]])">Suspend</a>
+											</th:block>
+
+											<th:block th:if="${tempUser.enabled == 0}">
+												<a class="dropdown-item"
+													style="color: green; background-color: #82FF76;"
+													th:onmouseover="this.style='cursor: pointer;background-color: #d9d9d9;'"
+													th:onmouseout="this.style='color: green; background-color: #82FF76;'"
+													th:onclick="reactivateUser([[${tempUser.id}]])">Reactivate</a>
+											</th:block>
+											
+											<a class="dropdown-item"
+												style="color: #080707; background-color: #ED1427;"
+												th:onmouseover="this.style='cursor: pointer;background-color: #d9d9d9;'"
+												th:onmouseout="this.style='color: #080707; background-color: #ED1427;'"
+												th:onclick="deleteCustomer([[${tempCustomer.customerId}]])">Remove
+											</a>
+											
+										</div>
+									</div>
+								</td>
+							</th:block>
+						</th:block>
+					</tr>
+				</tbody>
+			</table>
+
+			<div style="float: right">
+				<button th:onclick="prevPage()" id="btn_prev">Prev</button>
+				page: <span id="page"></span>
+				<button th:onclick="nextPage()" id="btn_next">Next</button>
+			</div>
+
+			<script th:src="@{/js/pagination.js}"></script>
+			<script>
+				$(document).ready(function() {
+					changePage(1);
+				});
+			</script>
+		</th:block>
+	</div>
+</th:block>

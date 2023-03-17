@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<th:block th:fragment="ajaxLoadedContent">
+
+	<div class="container"
+		th:style="${'font-family: Oswald, sans-serif; color: #12044F;margin-bottom: 100px;'}">
+		
+		<th:block th:if="${allOrders.size() == 0}">
+		<div th:align="${'center'}">
+			<h2 th:text="${'No orders currently available!'}"></h2>
+			<button class="btn btn-success mt-5"
+				th:onclick="redirectHome()" 
+				th:text="${'Home'}">
+			</button>
+		</div>
+		</th:block>
+		
+		<th:block th:if="${allOrders.size() > 0}">
+		<div class="row">
+			<h1>Orders</h1>
+		</div>
+
+		<div class="row"></div>
+		<input type="hidden" id="recordsPerPage" th:value="${recordsPerPage}">
+		<table class="table table-striped table-bordered" id="listingTable">
+			<thead class="table-danger">
+				<tr>
+					<th class="text-center"
+						style="text-align: center; vertical-align: middle">First Name</th>
+					<th class="text-center"
+						style="text-align: center; vertical-align: middle">Last Name</th>
+					<th class="text-center"
+						style="text-align: center; vertical-align: middle">Price</th>
+					<th class="text-center"
+						style="text-align: center; vertical-align: middle">Actions
+					</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr th:each="order: ${allOrders}">
+					<th:block th:each="tempCustomer : ${allCustomers}">
+						<th:block th:each="tempUser : ${allUsers}">
+							<th:block th:if="${order.customerId == tempCustomer.customerId}">
+								<th:block th:if="${tempCustomer.userId == tempUser.id}">
+									<td th:text="${tempUser.firstName}"
+										style="text-align: center; vertical-align: middle"></td>
+									<td th:text="${tempUser.lastName}"
+										style="text-align: center; vertical-align: middle"></td>
+									<td style="text-align: center; vertical-align: middle"><span>&euro;</span>
+										<span
+										th:text="${order.orderPrice} % 1 == 0 ? ${order.orderPrice} :${#numbers.formatDecimal(order.orderPrice, 0, 2)}">
+									</span></td>
+									<td style="text-align: center; vertical-align: middle">
+										<div class="dropdown">
+											<button type="button" class="btn btn-success dropdown-toggle"
+												data-toggle="dropdown">Actions</button>
+											<div class="dropdown-menu" style="background-color: #82FF76">
+												<a class="dropdown-item"
+													style="color: green; background-color: #82FF76"
+													th:onmouseover="this.style='cursor: pointer;background-color: #d9d9d9;'"
+													th:onmouseout="this.style='color: green; background-color: #82FF76;'"
+													th:onclick="redirectOrderDetails([[${order.customerOrderId}]])">Details</a>
+
+												<div class="dropdown-divider"></div>
+												<a class="dropdown-item"
+													style="color: red; background-color: #EBC8C8"
+													th:onmouseover="this.style='cursor: pointer;background-color: #d9d9d9;'"
+													th:onmouseout="this.style='color: red; background-color: #EBC8C8'"
+													th:onclick="deleteOrder([[${order.customerOrderId}]])">Delete
+												</a>
+											</div>
+										</div>
+									</td>
+								</th:block>
+							</th:block>
+						</th:block>
+					</th:block>
+				</tr>
+			</tbody>
+		</table>
+
+		<div style="float: right">
+			<button th:onclick="prevPage()" id="btn_prev">Prev</button>
+			page: <span id="page"></span>
+			<button th:onclick="nextPage()" id="btn_next">Next</button>
+		</div>
+
+		<script th:src="@{/js/pagination.js}"></script>
+		<script>
+			$(document).ready(function() {
+				changePage(1);
+			});
+		</script>
+		</th:block>
+	</div>
+
+</th:block>

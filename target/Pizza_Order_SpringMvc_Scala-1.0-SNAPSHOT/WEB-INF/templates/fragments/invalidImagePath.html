@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<th:block th:fragment="ajaxLoadedContent">
+
+	<div class="container mt-5 mb-5"
+		th:style="${'font-family: Oswald, sans-serif; color: #12044F;margin-bottom: 100px;'}">
+
+		<div class="jumbotron" th:style="${'background-color: #c20e14; color: #d9d9d9;'}">
+			<h1 th:text="${'Invalid Image Path'}"></h1>
+			<h5 th:text="${'Please add your valid project path from your pc in Admin Controller 
+			createPizza post function and deletePizza function '}"></h5>
+		</div>
+
+		<div th:align="${'center'}">
+			<button class="btn btn-secondary" th:onclick="redirectHome()" th:text="${'Home Page'}"></button>
+		</div>
+	</div>
+</th:block>

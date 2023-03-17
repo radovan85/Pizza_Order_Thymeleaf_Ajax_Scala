@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<th:block th:fragment="ajaxLoadedContent">
+
+	<div class="container mt-5"
+		th:style="${'font-family: Oswald, sans-serif; color: #12044F;margin-bottom: 100px;'}">
+		<div class="row">
+			<div
+				class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+				<h1 class="text-center" th:text="${'Confirm Address'}"></h1>
+				<div class="card-body">
+					<form th:object="${shippingAddress}" method="POST" id="shippingAddressForm">
+
+						<input 
+							type="hidden" 
+							name="shippingAddressId"
+							th:value="${currentAddress.shippingAddressId}"	
+						/>
+						
+						<input 
+							type="hidden" 
+							name="customerId"
+							th:value="${currentAddress.customerId}"	
+						/>
+
+						<div class="form-group">
+							<label> City </label> 
+							<input 
+								type="text" 
+								id="city" 
+								name="city"
+								class="form-control" 
+								th:placeholder="${'Enter Your City'}" 
+								th:value="${currentAddress.city}"
+							/>
+							<span
+								class="text-danger" id="cityError"
+								th:style="${'visibility: hidden;'}"
+								th:text="${'Please provide city!'}"> 
+							</span>
+						</div>
+
+						<div class="form-group">
+							<label> Zip Code </label> 
+							<input 
+								type="text" 
+								id="zipcode"
+								name="zipcode" 
+								class="form-control"
+								th:placeholder="${'Enter zip code'}" 
+								th:value="${currentAddress.zipcode}"
+							/>
+							<span class="text-danger" id="zipcodeError"
+								th:style="${'visibility: hidden;'}"
+								th:text="${'Please provide zip code!'}"> </span>
+						</div>
+
+						<div class="form-group">
+							<label th:text="${'Street & Number'}"></label> 
+							<input 
+								type="text"
+								id="address" 	
+								name="address" 
+								class="form-control"
+								th:placeholder="${'Enter Street & Number Of Your Residency'}" 
+								th:value="${currentAddress.address}"
+							/>
+							<span class="text-danger" id="addressError"
+								th:style="${'visibility: hidden;'}"
+								th:text="${'Please provide address!'}"> </span>
+						</div>
+
+
+
+						<div class="box-footer">
+							<button type="button" class="btn btn-danger mr-3"  
+           						th:onclick="redirectCancelOrder()" 
+           						th:text="${'Cancel'}">
+           					</button>
+							<button type="submit" class="btn btn-success">Continue</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script>shippingAddressInterceptor("shippingAddressForm")</script>
+</th:block>

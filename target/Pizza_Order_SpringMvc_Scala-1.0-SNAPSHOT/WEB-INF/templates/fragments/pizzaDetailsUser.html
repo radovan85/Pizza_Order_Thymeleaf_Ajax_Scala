@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<th:block th:fragment="ajaxLoadedContent">
+
+<div class="container mt-5" th:style="${'font-family: Oswald, sans-serif; color: #12044F;margin-bottom: 100px;'}">
+    <div class="row">
+        <h3> View Pizza Details <a style="margin-left: 390px" th:onclick="redirectAllPizzasUser()"
+                                                                                 class="btn btn-success"><- Back</a> </h3>
+    </div>
+    <br>
+    <table class="table">
+        <tbody>
+        <tr>
+            <th></th>
+            <td><img th:src="@{${pizza.getMainImagePath}}" height="250" width="332.5"></td>
+        </tr>
+        <tr>
+            <th class="list-group-item-secondary" style="background-color: #82FF76"> Name: </th>
+            <td class="list-group-item-secondary" style="background-color: #82FF76" th:text="${pizza.name}" ></td>
+        </tr>
+        <tr>
+            <th> Description: </th>
+            <td th:text="${pizza.description}" ></td>
+        </tr>
+
+		<th:block>
+        <table class="table table-striped table-bordered" >
+            <thead class="table-danger">
+            <tr>
+                <th class="text-center" style="text-align: center; vertical-align: middle"> Size </th>
+                <th class="text-center" style="text-align: center; vertical-align: middle"> Price</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="pizzaSize: ${pizzaSizes}">
+                <td th:text = "${pizzaSize.name}" style="text-align: center; vertical-align: middle"></td>
+                <td style="text-align: center; vertical-align: middle" >
+                	<span>&euro;</span>
+            		<span th:text="${pizzaSize.price} % 1 == 0 ? ${pizzaSize.price} :${#numbers.formatDecimal(pizzaSize.price, 0, 2)}">
+            		</span>	
+                </td>
+            </tr>
+            </tbody>
+        </table>
+       
+        <br>
+         </th:block>
+        <tr>
+            <th class="list-group-item-danger" style="vertical-align: middle; background-color: #82FF76"> Actions: </th>
+            <td class="list-group-item-danger" style="background-color: #82FF76">
+                <button th:onclick="redirectAddPizzaToCart([[${pizza.pizzaId}]])"
+                   class="btn btn-success">Order Now</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</th:block>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<th:block th:fragment="ajaxLoadedContent">
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<th:block th:fragment="ajaxLoadedContent">
+
+<div class="container mt-5" th:style="${'font-family: Oswald, sans-serif; color: #12044F;margin-bottom: 100px;'}">
+    <div class="row">
+        <h3> View Pizza Details <button style="margin-left: 390px" th:onclick="redirectAllSizes()"
+                                                                                 class="btn btn-success"><- Back</button> </h3>
+    </div>
+<br>
+<table class="table">
+    <tbody>
+    <tr>
+        <th> Name: </th>
+        <td th:text = "${pizza.name}"></td>
+    </tr>
+    <tr>
+        <th class="list-group-item-secondary" style="background-color: #82FF76"> Size: </th>
+        <td class="list-group-item-secondary" style="background-color: #82FF76" th:text="${pizzaSize.name}" ></td>
+    </tr>
+    <tr>
+        <th></th>
+        <td><img th:src="@{${pizza.getMainImagePath}}" height="250" width="332.5"></td>
+    </tr>
+    <tr>
+        <th class="list-group-item-secondary" style="background-color: #82FF76"> Price: </th>
+        <td class="list-group-item-secondary" style="background-color: #82FF76"> 
+        	<span>&euro;</span>
+        	<span th:text="${pizzaSize.price} % 1 == 0 ? ${pizzaSize.price} :${#numbers.formatDecimal(pizzaSize.price, 0, 2)}" ></span>
+        </td>
+    </tr>
+    <tr>
+        <th class="list-group-item-primary" style="vertical-align: middle; background-color: #82FF76"> Actions: </th>
+        <td class="list-group-item-primary" style="background-color: #82FF76">
+            
+            <button th:onclick="redirectUpdatePizzaSize([[${pizzaSize.pizzaSizeId}]])" 
+               class="btn btn-success" th:text="${'Update'}">
+            </button>
+            <button th:onclick="deletePizzaSize([[${pizzaSize.pizzaSizeId}]])"
+               class="btn btn-danger" th:text="${'Delete'}"></button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</div>
+
+</th:block>
+
+</th:block>
